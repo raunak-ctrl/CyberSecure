@@ -1,2 +1,1151 @@
-Website Summary
-Our platform is designed to make learning cybersecurity easy, engaging, and practical. It offers clear and structured knowledge about essential cybersecurity concepts to help users stay safe online. To make the experience interactive, the website features a quiz section, where learners can test their understanding and, upon successful completion, earn a certificate to showcase their achievement. Additionally, a built-in chatbot assistant is available to instantly answer doubts and provide guidance, ensuring a smooth and supportive learning journey.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCP- LearnCyber Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --text: #e6f1ff;
+            --text-secondary: #8892b0;
+            --danger: #ff2e63;
+            --success: #00ff9d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+        
+        .user-info i {
+            font-size: 1.2rem;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .cyber-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), #00ff9d);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            font-size: 1.2rem;
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: rgba(136, 146, 176, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #00ff9d);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .level-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .level {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(100, 255, 218, 0.1);
+            width: 30%;
+            transition: all 0.3s ease;
+        }
+        
+        .level.active {
+            background-color: rgba(100, 255, 218, 0.3);
+            border: 1px solid var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .level.completed {
+            background-color: rgba(0, 255, 157, 0.2);
+        }
+        
+        .level i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .level-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .level-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: rgba(10, 25, 47, 0.5);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px;
+            border-radius: 10px;
+            line-height: 1.5;
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: rgba(100, 255, 218, 0.2);
+            border-left: 3px solid var(--accent);
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: rgba(0, 255, 157, 0.2);
+            border-right: 3px solid var(--success);
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            background-color: rgba(10, 25, 47, 0.5);
+            color: var(--text);
+        }
+        
+        .chat-input button {
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: none;
+            background: linear-gradient(45deg, var(--accent), #00ff9d);
+            color: var(--primary);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.4);
+        }
+        
+        .quiz-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(100, 255, 218, 0.3);
+        }
+        
+        .quiz-question {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-option {
+            padding: 12px;
+            background-color: rgba(136, 146, 176, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-option:hover {
+            background-color: rgba(100, 255, 218, 0.2);
+        }
+        
+        .quiz-option.selected {
+            background-color: rgba(100, 255, 218, 0.3);
+            border: 1px solid var(--accent);
+        }
+        
+        .quiz-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent), #00ff9d);
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .visualization-container {
+            margin-top: 30px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            margin-top: 20px;
+        }
+        
+        .certificate-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .certificate {
+            background: linear-gradient(135deg, #0a192f, #112240);
+            border: 20px solid rgba(100, 255, 218, 0.3);
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid var(--accent);
+            pointer-events: none;
+        }
+        
+        .certificate-title {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .certificate-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .certificate-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .certificate-user {
+            font-size: 2rem;
+            color: var(--accent);
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px dashed var(--accent);
+            display: inline-block;
+        }
+        
+        .certificate-date {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        
+        .welcome-screen {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .welcome-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent), #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .name-input-container {
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+        
+        .name-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            background-color: rgba(10, 25, 47, 0.5);
+            color: var(--text);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .start-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, var(--accent), #00ff9d);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(100, 255, 218, 0.4);
+        }
+        
+        .article-content {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .article-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .article-content::-webkit-scrollbar-track {
+            background: rgba(136, 146, 176, 0.1);
+            border-radius: 10px;
+        }
+        
+        .article-content::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+        
+        .article-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .level-indicator {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .level {
+                width: 100%;
+            }
+        }
+        
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--accent) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, var(--success) 0%, transparent 20%);
+        }
+        
+        .hacker-text {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(45deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 5px;
+            border: 1px solid var(--accent);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-virus"></i>
+                <div class="logo-text">LCP- LearnCyber Platform</div>
+            </div>
+            <div class="user-info">
+                <i class="fas fa-user-shieldr"></i>
+                <span id="username-display">Guest</span>
+            </div>
+        </header>
+
+        <div id="welcome-screen" class="welcome-screen">
+            <h1 class="welcome-title">Welcome to LCP- LearnCyber Platform</h1>
+            <p class="welcome-subtitle">Master cybersecurity fundamentals through interactive lessons and quizzes.</p>
+            
+            <div class="name-input-container">
+                <input type="text" id="name-input" class="name-input" placeholder="Enter your name to begin">
+                <button onclick="startLearning()" class="start-btn">Let's Learn</button>
+            </div>
+        </div>
+
+        <div id="main-content" class="main-content" style="display: none;">
+            <div class="left-column">
+                <div class="cyber-card">
+                    <h2 class="card-title"><i class="fas fa-graduation-cap"></i> Cybersecurity Learning Path</h2>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Your Progress</span>
+                            <span id="progress-percentage">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="level-indicator">
+                        <div class="level active" id="level-1">
+                            <i class="fas fa-lock"></i>
+                            <div class="level-number">Level 1</div>
+                            <div class="level-title">Applications</div>
+                        </div>
+                        <div class="level" id="level-2">
+                            <i class="fas fa-shield-alt"></i>
+                            <div class="level-number">Level 2</div>
+                            <div class="level-title">Virus</div>
+                        </div>
+                        <div class="level" id="level-3">
+                            <i class="fas fa-bug"></i>
+                            <div class="level-number">Level 3</div>
+                            <div class="level-title">Other threats and how to handle them</div>
+                        </div>
+                    </div>
+                    
+                    <div id="article-container">
+                        <h2>Applications of Cybersecurity</h2>
+                        <div class="article-content">
+                            <h3>Cyber security in smart grid </h3>
+                            <p>The smart grid is the next generation of power systems, and by merging cutting-edge computing and communication technologies, it is anticipated to increase the efficiency and dependability of future power systems with renewable energy supplies, distributed intelligence, and demand response. </p>
+                            
+                            <h3>Cyber security in smart eHealth system & IoT-based healthcare applications</h3>
+                            <p>Remote patient monitoring, and smart health rely heavily on internet-connected devices to collect health-related data from various sources such as medical devices and mobile apps.   According to the World Economic Forum, more than 10 million records of all kinds were stolen, including social security numbers, patient medical records, HIV test results, and personal information of health care providers.</p>
+                            <h3> Cyber security in smart city </h3>
+                            <p>A smart city is an urban area that uses advanced technology and communication infrastructure to improve the quality of life for its citizens. Smart city cybersecurity applications protect critical infrastructure such as power, water, transportation, and communications; protect connected Internet of Things (IoT) devices, including sensors, cameras, and other Internet of things (IoT) devices; ensure citizen's privacy, including the personal information collected, protect disaster recovery systems.</p>
+                            
+                        </div>
+                        
+                        <div class="article-actions">
+                            <button class="btn btn-primary" onclick="showQuiz()">
+                                <i class="fas fa-forward"></i> Continue to Quiz
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-container" class="quiz-container" style="display: none;">
+                        <h3>Quiz-1:</h3>
+                        <div class="quiz-question" id="quiz-question">What is the main role of cybersecurity in the smart grid?</div>
+                        <div class="quiz-options" id="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this)">To increase electricity bills for consumers</div>
+                            <div class="quiz-option" onclick="selectOption(this)">To enhance efficiency, reliability, and secure communication in future power systems</div>
+                            <div class="quiz-option" onclick="selectOption(this)">To reduce the use of renewable energy sources</div>
+                            <div class="quiz-option" onclick="selectOption(this)">To replace computing technologies with manual systems</div>
+                        </div>
+                        <div class="quiz-actions">
+                            <button class="btn btn-secondary" onclick="resetQuiz()">Reset</button>
+                            <button class="btn btn-primary" onclick="submitAnswer()">Submit Answer</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cyber-card visualization-container">
+                    <h2 class="card-title"><i class="fas fa-chart-pie"></i> Global Cyber Threat Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="threatChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="cyber-card">
+                    <h2 class="card-title"><i class="fas fa-robot"></i> CybHelp</h2>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message bot-message">
+                                Hello! I'm your Cyber Help. Ready to learn about cybersecurity? Let's start with the basics.
+                            </div>
+                            <div class="message bot-message">
+                                Cybersecurity is all about protecting internet-connected systems from digital threats. Ask me anything!
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="user-input" placeholder="Type your question here...">
+                            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cyber-card">
+                    <h2 class="card-title"><i class="fas fa-tasks"></i> Next Steps</h2>
+                    <ul id="tasks-list">
+                        <li><i class="fas fa-check-circle"></i> Read the article</li>
+                        <li><i class="far fa-circle"></i> Complete the quiz</li>
+                        <li><i class="far fa-circle"></i> Move to Level 2</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="certificate-container" class="certificate-container">
+            <div class="cyber-card">
+                <h2 class="card-title"><i class="fas fa-certificate"></i> Certificate of Completion</h2>
+                
+                <div class="certificate">
+                    <h1 class="certificate-title"><i class="fas fa-shield-alt"></i> LCP- LearnCyber Platform</h1>
+                    <h2 class="certificate-subtitle">Certificate of Cybersecurity Proficiency</h2>
+                    
+                    <p class="certificate-text">This certifies that</p>
+                    <h2 class="certificate-user" id="certificate-user">Student Name</h2>
+                    <p class="certificate-text">has successfully completed all three levels of cybersecurity training and demonstrated proficiency in fundamental cybersecurity concepts, threat identification and protection mechanisms.</p>
+                    
+                    <p class="certificate-date">Issued on: <span id="certificate-date">September 15, 2023</span></p>
+                    
+                    <div class="certificate-signature">
+                        <p>LCP- LearnCyber Platform</p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="window.location.reload()" style="margin-top: 30px;">
+                    <i class="fas fa-redo"></i> Start Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User data and application state
+        const userData = {
+            name: "Guest",
+            level: 1,
+            progress: 0,
+            completedLevels: [],
+            currentQuizQuestion: 0,
+            quizScore: 0
+        };
+        
+        // Quiz questions for each level
+        const quizQuestions = {
+            1: [
+                {
+                    question: "What is the main role of cybersecurity in the smart grid?",
+                    options: [
+                        "To increase electricity bills for consumers",
+                        "To enhance efficiency, reliability, and secure communication in future power systems",
+                        "To reduce the use of renewable energy sources",
+                        "To replace computing technologies with manual systems"
+                    ],
+                    answer: 1
+                },
+                {
+                    question: "According to the World Economic Forum, more than 10 million records were stolen from smart eHealth systems, including:",
+                    options: [
+                        "Social security numbers, patient medical records, and HIV test results",
+                        "Flight booking details and hotel reservations",
+                        "Online shopping history and delivery addresses",
+                        "Vehicle registration numbers and driving licenses"
+                    ],
+                    answer: 0
+                },
+                {
+                    question: "In a smart city, cybersecurity mainly helps in:",
+                    options: [
+                        "Building more houses and roads",
+                        "Protecting critical infrastructure, IoT devices, citizens privacy, and disaster recovery systems",
+                        "Reducing the population density in urban areas",
+                        "Increasing entertainment options for citizens"
+                    ],
+                    answer: 1
+                }
+            ],
+            2: [
+                {
+                    question: "In cybersecurity, what makes a virus different from other types of malware?",
+                    options: [
+                        "It overloads a network to disrupt services",
+                        "It self-replicates by inserting its code into other programs and files",
+                        "It encrypts files and demands ransom for decryption",
+                        " It secretly collects user data without permission"
+                    ],
+                    answer: 1
+                },
+                {
+                    question: " Which of the following is NOT a possible consequence of a virus infection?",
+                    options: [
+                        "Data loss and theft of sensitive information",
+                        "Slow or malfunctioning computer systems",
+                        "Increasing internet speed and performance",
+                        "Disruption of services, making a computer unusable"
+                    ],
+                    answer: 2
+                },
+                {
+                    question: "Which is the most effective preventive measure against virus infections?",
+                    options: [
+                        "Using only removable media for data sharing",
+                        "Keeping antivirus software updated and enabling firewall protection",
+                        "Allowing emails from unknown senders for better communication",
+                        "Disabling the firewall to improve connectivity"
+                    ],
+                    answer: 1
+                }
+            ],
+            3: [
+                {
+                    question: "Which of the following is a common method to prevent phishing attacks?",
+                    options: [
+                        "Verifying sender details and avoiding suspicious links",
+                        "Using parameterized queries",
+                        "Backing up data regularly",
+                        "Encrypting communication with HTTPS"
+                    ],
+                    answer: 0
+                },
+                {
+                    question: "Ransomware primarily affects a system by:",
+                    options: [
+                        "Encrypting files and demanding payment for decryption",
+                        "Overloading the server with traffic",
+                        "Intercepting communication between two partiess",
+                        "Displaying unwanted advertisements"
+                    ],
+                    answer: 0
+                },
+                {
+                    question: "Which threat involves attackers inserting malicious code into databases to steal or alter data?",
+                    options: [
+                        "Man-in-the-Middle Attack",
+                        "SQL Injection",
+                        "Denial-of-Service Attack",
+                        "Spyware"
+                    ],
+                    answer: 1
+                }
+            ]
+        };
+        
+        // Articles for each level
+        const articles = {
+            1: `
+                <h2>Applications of cybersecurity </h2>
+                <div class="article-content">
+                    <h3>Cyber security in smart grid</h3>
+                    <p>The smart grid is the next generation of power systems, and by merging cutting-edge computing and communication technologies, it is anticipated to increase the efficiency and dependability of future power systems with renewable energy supplies, distributed intelligence, and demand response. <p>
+                    <h3>Cyber security in smart eHealth system & IoT-based healthcare applications</h3>
+                    <p>Remote patient monitoring, and smart health rely heavily on internet-connected devices to collect health-related data from various sources such as medical devices and mobile apps. According to the World Economic Forum, more than 10 million records of all kinds were stolen, including social security numbers, patient medical records, HIV test results, and personal information of health care providers.</p>
+                    <h3>Cyber security in smart city </h3>
+                    <p>A  smart city is an urban area that uses advanced technology and communication infrastructure to improve the quality of life for its citizens. Smart city cybersecurity applications protect critical infrastructure such as power, water, transportation, and communications; protect connected Internet of Things (IoT) devices, including sensors, cameras, and other Internet of things (IoT) devices; ensure citizen's privacy, including the personal information collected, protect disaster recovery systems.</p>
+
+                </div>
+            `,
+            2: `
+                <h2>Viruses in cybersecurity and how to handle it .</h2>
+                <div class="article-content">
+                    <p>In cybersecurity, a virus is a type of malware that self-replicates by inserting its code into other programs and files on a computer. Once infected, a virus can spread when the host file or program is transferred to another device through methods like infected email attachments, file sharing, or removable media. Viruses are designed to cause damage, steal data, interrupt services, or otherwise disrupt normal computer functions. </p>
+                    <h3>Consequences of a Virus Infection:</h3>
+                    <p>Viruses can cause data loss, slow or malfunctioning systems, theft of sensitive information, and disruption of services, sometimes rendering computers unusable.</p>
+                    <h3>Protection Against Viruses </h3>
+                    <p>Antivirus Software:Install and maintain reputable antivirus software and keep it updated. Also  attachments or clicking on links from unknown or suspicious email senders. </p>
+                    <p>Firewall Protection:Ensure your computer's firewall is enabled to block unauthorized network access</p>
+                  
+                </div>
+            `,
+            3: `
+                <h2>Common Cybersecurity Threats & How to Handle Them </h3>
+                <div class="article-content">
+                    <h3>Phishing Attacks </h3>
+                    <p>Threat: Fake emails or websites tricking users into revealing personal data.</p>
+                    <p>Protection: Verify sender details, avoid clicking suspicious links, and use email filters.</p>
+                    <h3>Ransomware</h3>
+                    <p>Threat: Malware that encrypts files and demands payment to restore access.</p>
+                    <p>Protection: Regular data backups, updated security patches, and avoid downloading unknown files.</p>
+                    <h3>Denial-of-Service (DoS) / Distributed DoS (DDoS) Attacks</h3>
+                    <p>Threat: Overloading a server or network to make it unavailable.</p>
+                    <p>Protection: Use firewalls, intrusion detection systems, and traffic filtering.</p>
+                    <h3>Man-in-the-Middle (MITM) Attacks </h3>
+                    <p>Threat: Hackers intercept communication between two parties to steal or alter information.</p>
+                    <p>Protection: Use strong encryption (HTTPS, VPNs), avoid public Wi-Fi without protection.</p>
+                    <h3>SQL Injection</h3>
+                    <p>Threat: Attackers insert malicious SQL queries into databases to steal or manipulate data.</p>
+                    <p>Protection: Use input validation, parameterized queries, and regular security testing.</p>
+                
+                    
+                </div>
+            `
+        };
+        
+        // Initialize the application
+        function initApp() {
+            // Setup threat visualization chart
+            setupThreatChart();
+            
+            // Display initial article
+            updateArticle();
+        }
+        
+        // Start learning process
+        function startLearning() {
+            const nameInput = document.getElementById('name-input');
+            if (nameInput.value.trim() === '') {
+                alert('Please enter your name to continue');
+                return;
+            }
+            
+            userData.name = nameInput.value.trim();
+            document.getElementById('username-display').textContent = userData.name;
+            document.getElementById('certificate-user').textContent = userData.name;
+            
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'grid';
+            
+            initApp();
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercentage = userData.progress;
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-percentage');
+            
+            progressFill.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}%`;
+        }
+        
+        // Update article content based on current level
+        function updateArticle() {
+            const articleContainer = document.getElementById('article-container');
+            articleContainer.innerHTML = articles[userData.level] + `
+                <div class="article-actions">
+                    <button class="btn btn-primary" onclick="showQuiz()">
+                        <i class="fas fa-forward"></i> Continue to Quiz
+                    </button>
+                </div>
+            `;
+            
+            // Update tasks list
+            const tasksList = document.getElementById('tasks-list');
+            tasksList.innerHTML = `
+                <li><i class="far fa-circle"></i> Read the article</li>
+                <li><i class="far fa-circle"></i> Complete the quiz</li>
+                <li><i class="far fa-circle"></i> Move to Level ${userData.level + 1}</li>
+            `;
+        }
+        
+        // Setup threat visualization chart
+        function setupThreatChart() {
+            const ctx = document.getElementById('threatChart').getContext('2d');
+            const threatChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Phishing', 'Malware', 'Ransomware', 'DDoS', 'Insider Threats'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            '#64ffda',
+                            '#00ff9d',
+                            '#0aff6f',
+                            '#0ae0ff',
+                            '#ff2e63'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#e6f1ff',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Show quiz for current level
+        function showQuiz() {
+            userData.currentQuizQuestion = 0;
+            userData.quizScore = 0;
+            
+            displayQuestion();
+            
+            document.getElementById('article-container').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            
+            // Update tasks list
+            const tasksList = document.getElementById('tasks-list');
+            tasksList.innerHTML = `
+                <li><i class="fas fa-check-circle"></i> Read the article</li>
+                <li><i class="far fa-circle"></i> Complete the quiz</li>
+                <li><i class="far fa-circle"></i> Move to Level ${userData.level + 1}</li>
+            `;
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            const quiz = quizQuestions[userData.level][userData.currentQuizQuestion];
+            document.getElementById('quiz-question').textContent = `Question ${userData.currentQuizQuestion + 1}: ${quiz.question}`;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            quiz.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.textContent = option;
+                optionElement.onclick = function() { selectOption(this); };
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            resetQuiz();
+        }
+        
+        // Select quiz option
+        function selectOption(element) {
+            // Deselect all options
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Select clicked option
+            element.classList.add('selected');
+        }
+        
+        // Reset quiz selection
+        function resetQuiz() {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+        }
+        
+        // Submit answer
+        function submitAnswer() {
+            const selectedOption = document.querySelector('.quiz-option.selected');
+            if (!selectedOption) {
+                alert('Please select an answer');
+                return;
+            }
+            
+            const options = document.querySelectorAll('.quiz-option');
+            const selectedIndex = Array.from(options).indexOf(selectedOption);
+            const quiz = quizQuestions[userData.level][userData.currentQuizQuestion];
+            
+            if (selectedIndex === quiz.answer) {
+                // Correct answer
+                userData.quizScore++;
+                
+                if (userData.currentQuizQuestion < 2) {
+                    // Move to next question
+                    userData.currentQuizQuestion++;
+                    displayQuestion();
+                } else {
+                    // Quiz completed
+                    if (userData.quizScore === 3) {
+                        // Perfect score - level completed
+                        userData.completedLevels.push(userData.level);
+                        userData.progress = Math.min(100, userData.progress + 33.33);
+                        
+                        // Update level indicator
+                        document.getElementById(`level-${userData.level}`).classList.add('completed');
+                        
+                        if (userData.level < 3) {
+                            // Move to next level
+                            userData.level++;
+                            document.getElementById(`level-${userData.level}`).classList.add('active');
+                            
+                            // Update article and show
+                            updateArticle();
+                            document.getElementById('article-container').style.display = 'block';
+                            document.getElementById('quiz-container').style.display = 'none';
+                            
+                            // Update tasks list
+                            const tasksList = document.getElementById('tasks-list');
+                            tasksList.innerHTML = `
+                                <li><i class="far fa-circle"></i> Read the article</li>
+                                <li><i class="far fa-circle"></i> Complete the quiz</li>
+                                <li><i class="far fa-circle"></i> Move to Level ${userData.level + 1}</li>
+                            `;
+                            
+                            // Send congratulatory message from assistant
+                            addBotMessage(`Congratulations! You've completed Level ${userData.level-1} with a perfect score! Let's move on to Level ${userData.level}!`);
+                        } else {
+                            // All levels completed
+                            userData.progress = 100;
+                            
+                            // Show certificate
+                            document.getElementById('main-content').style.display = 'none';
+                            document.getElementById('certificate-container').style.display = 'block';
+                            
+                            // Set certificate date
+                            document.getElementById('certificate-date').textContent = new Date().toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+                            
+                            // Update tasks list
+                            const tasksList = document.getElementById('tasks-list');
+                            tasksList.innerHTML = `
+                                <li><i class="fas fa-check-circle"></i> Read the article</li>
+                                <li><i class="fas fa-check-circle"></i> Complete the quiz</li>
+                                <li><i class="fas fa-check-circle"></i> All levels completed!</li>
+                            `;
+                        }
+                        
+                        updateProgress();
+                    } else {
+                        // Not all answers correct
+                        alert(`You got ${userData.quizScore} out of 3 questions correct. You need a perfect score to advance. Please try again.`);
+                        showQuiz();
+                    }
+                }
+            } else {
+                // Incorrect answer
+                alert('Incorrect answer. Please try again.');
+                resetQuiz();
+            }
+        }
+        
+        // Send chat message
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            
+            if (message !== '') {
+                addUserMessage(message);
+                userInput.value = '';
+                
+                // Simulate bot response after a short delay
+                setTimeout(() => {
+                    let response = "I'm here to help with cybersecurity topics. ";
+                    
+                    if (message.toLowerCase().includes('password')) {
+                        response = "Strong passwords should be at least 12 characters long and include a mix of letters, numbers, and symbols. Avoid using personal information or common words.";
+                    } else if (message.toLowerCase().includes('phishing')) {
+                        response = "Phishing is a cyber attack that uses disguised email as a weapon. The goal is to trick the email recipient into believing that the message is something they want or need and to click a link or download an attachment.";
+                    } else if (message.toLowerCase().includes('malware')) {
+                        response = "Malware is any software intentionally designed to cause damage to a computer, server, client, or computer network. Various types of malware include viruses, worms, Trojan horses, ransomware, and spyware.";
+                    } else if (message.toLowerCase().includes('thank')) {
+                        response = "You're welcome! Is there anything else you'd like to know about cybersecurity?";
+                    } else if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+                        response = "Hello there! I'm your Cyber Assistant. How can I help you with cybersecurity today?";
+                    } else if (message.toLowerCase().includes('help')) {
+                        response = "I can help explain cybersecurity concepts, best practices, and answer questions about online safety. What would you like to know?";
+                    } else if (message.toLowerCase().includes('firewall')) {
+                        response = "A firewall is a network security device that monitors and filters incoming and outgoing network traffic. It acts as a barrier between trusted and untrusted networks.";
+                    } else if (message.toLowerCase().includes('vpn')) {
+                        respnose = "A VPN (Virtual Private Network) creates a secure connection over less secure networks. It encrypts your internet traffic and hides your online identity.";
+                    }
+                    
+                    addBotMessage(response);
+                }, 1000);
+            }
+        }
+        
+        // Add user message to chat
+        function addUserMessage(message) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message user-message';
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Add bot message to chat
+        function addBotMessage(message) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message bot-message';
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            // Add event listener for Enter key in chat input
+            document.getElementById('user-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Add event listener for Enter key in name input
+            document.getElementById('name-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    startLearning();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
