@@ -1,2 +1,2 @@
-# CyberSecure
-WE ARE UNITED
+Website Summary
+Our platform is designed to make learning cybersecurity easy, engaging, and practical. It offers clear and structured knowledge about essential cybersecurity concepts to help users stay safe online. To make the experience interactive, the website features a quiz section, where learners can test their understanding and, upon successful completion, earn a certificate to showcase their achievement. Additionally, a built-in chatbot assistant is available to instantly answer doubts and provide guidance, ensuring a smooth and supportive learning journey.
